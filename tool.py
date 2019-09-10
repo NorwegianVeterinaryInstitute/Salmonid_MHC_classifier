@@ -55,21 +55,9 @@ def translate(name, nt_file, seq_len, aa_file):
 def muscle_aln(name, nt_file, input_file, specific_db, aln_file, tree_file, tree_png_file):
     execute('cat ' + nt_file + ' data/' + specific_db + '.nt > ' + input_file)
     execute('muscle -in ' + input_file + ' -out ' + aln_file + ' -tree2 ' + tree_file)
-#    execute('nw_display -s ' + tree_file + ' > ' + tree_svg_file)
-#    execute('cairosvg -f pdf -o ' + tree_pdf_file + ' ' + tree_svg_file)
     Tree(tree_file).render(tree_png_file, dpi=200, w=400, units='mm')
     print(name + ' (2/5 tasks): Muscle complete')
     
-
-def clade_extraction_old(name, tree_file):
-    execute('nw_clade -s ' + tree_file + ' ' + name + ' > ' + clade_out_file)
-    for line in open(clade_out_file, 'r'):
-        if 'WARNING' not in line:
-            clade_ids = line.split('|')[1]
-    print(name + ' (3/5 tasks): Clade extraction complete')
-    return(clade_ids)
-
-
 def clade_extraction(name, tree_file):
     siblings = []
     node = Tree(tree_file).search_nodes(name=name)[0]
@@ -171,11 +159,8 @@ def main(input_file, report_file_name, specific_db):
 
 if __name__ == '__main__':
     input_file = sys.argv[1]
-#    input_file = 'input.nt'
     specific_db = sys.argv[2]
-#    specific_db = 'SASA-DAA'
     report_file_name = sys.argv[3]
-#    report_file_name = 'report.txt'
     main(input_file, report_file_name, specific_db)
 
     print('All done')
