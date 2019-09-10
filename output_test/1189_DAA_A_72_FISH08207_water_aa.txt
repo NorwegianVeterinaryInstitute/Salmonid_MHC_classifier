@@ -1,0 +1,50 @@
+########################################
+# Program: water
+# Rundate: Mon  9 Sep 2019 15:00:30
+# Commandline: water
+#    -asequence output/1189_DAA_A_72.aa
+#    -bsequence scratch/FISH08207.aa
+#    -gapopen 10
+#    -gapextend 0.5
+#    -outfile output/1189_DAA_A_72_FISH08207_water_aa.txt
+# Align_format: srspair
+# Report_file: output/1189_DAA_A_72_FISH08207_water_aa.txt
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: 1189_DAA_A_72_1
+# 2: FISH08207
+# Matrix: EBLOSUM62
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 151
+# Identity:     146/151 (96.7%)
+# Similarity:   146/151 (96.7%)
+# Gaps:           0/151 ( 0.0%)
+# Score: 799.0
+# 
+#
+#=======================================
+
+1189_DAA_A_72      1 CWQVYAEHKVLHIDLHIIGCSDSDGVDMYGLDGEEMWYADFNKGEGVVAL     50
+                     |||||||||||||||.|.||||||||||||||||||||||||||||||||
+FISH08207          5 CWQVYAEHKVLHIDLVITGCSDSDGVDMYGLDGEEMWYADFNKGEGVVAL     54
+
+1189_DAA_A_72     51 PPFADPFTFPGFYEGAVGNQGVCKANLAVNIKAYKNPEEKIDPPHSSIYP    100
+                     |||||||||.|.||||||||||||||||||||||||||||||||||||||
+FISH08207         55 PPFADPFTFHGAYEGAVGNQGVCKANLAVNIKAYKNPEEKIDPPHSSIYP    104
+
+1189_DAA_A_72    101 RDDVDLGVENTLICHVSGFFPAPVRVRWTRNNQNLTEGVRLSTPYPNADF    150
+                     |||||||||||||||||||.||||||||||||||||||||||||||||||
+FISH08207        105 RDDVDLGVENTLICHVSGFHPAPVRVRWTRNNQNLTEGVRLSTPYPNADF    154
+
+1189_DAA_A_72    151 T    151
+                     |
+FISH08207        155 T    155
+
+
+#---------------------------------------
+#---------------------------------------

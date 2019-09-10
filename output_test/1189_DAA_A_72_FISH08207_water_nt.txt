@@ -1,0 +1,74 @@
+########################################
+# Program: water
+# Rundate: Mon  9 Sep 2019 15:00:30
+# Commandline: water
+#    -asequence output/1189_DAA_A_72.fa
+#    -bsequence scratch/FISH08207.nt
+#    -gapopen 10
+#    -gapextend 0.5
+#    -outfile output/1189_DAA_A_72_FISH08207_water_nt.txt
+# Align_format: srspair
+# Report_file: output/1189_DAA_A_72_FISH08207_water_nt.txt
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: 1189_DAA_A_72
+# 2: FISH08207
+# Matrix: EDNAFULL
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 473
+# Identity:     433/473 (91.5%)
+# Similarity:   433/473 (91.5%)
+# Gaps:          27/473 ( 5.7%)
+# Score: 2071.0
+# 
+#
+#=======================================
+
+1189_DAA_A_72      7 CAGGTG---TATGCAGAACA-----------------------CAAAGTT     30
+                     |||.||   |||.| .||||                       |..||||
+FISH08207        463 CAGATGTAATATAC-TAACAGTGTGTTTTATTGGGTTTCTTTTCTCAGTT    511
+
+1189_DAA_A_72     31 CTGCATATTGATTTACATATTATTGGATGCAGTGATTCAGATGGAGTGGA     80
+                     |||||||||||||||..|||||.|||||||||||||||||||||||||||
+FISH08207        512 CTGCATATTGATTTAGTTATTACTGGATGCAGTGATTCAGATGGAGTGGA    561
+
+1189_DAA_A_72     81 CATGTATGGACTGGATGGGGAAGAGATGTGGTACGCAGACTTCAACAAGG    130
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+FISH08207        562 CATGTATGGACTGGATGGGGAAGAGATGTGGTACGCAGACTTCAACAAGG    611
+
+1189_DAA_A_72    131 GGGAGGGAGTGGTGGCCCTGCCTCCGTTTGCAGATCCATTTACCTTCCCT    180
+                     ||||||||||||||||||||||||||||||||||||||||||||||||.|
+FISH08207        612 GGGAGGGAGTGGTGGCCCTGCCTCCGTTTGCAGATCCATTTACCTTCCAT    661
+
+1189_DAA_A_72    181 GGATTTTATGAAGGGGCTGTAGGTAACCAGGGGGTATGCAAAGCAAACCT    230
+                     |||..|||||||||||||||||||||||||||||||||||||||||||||
+FISH08207        662 GGAGCTTATGAAGGGGCTGTAGGTAACCAGGGGGTATGCAAAGCAAACCT    711
+
+1189_DAA_A_72    231 GGCCGTAAACATAAAAGCTTACAAGAACCCAGAAGAGAAAATAGACCCTC    280
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+FISH08207        712 GGCCGTAAACATAAAAGCTTACAAGAACCCAGAAGAGAAAATAGACCCTC    761
+
+1189_DAA_A_72    281 CTCACAGCAGCATCTACCCCCGGGACGATGTGGACCTGGGGGTGGAGAAC    330
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+FISH08207        762 CTCACAGCAGCATCTACCCCCGGGACGATGTGGACCTGGGGGTGGAGAAC    811
+
+1189_DAA_A_72    331 ACCCTCATCTGCCATGTCAGCGGGTTCTTCCCTGCACCTGTCCGAGTCAG    380
+                     |||||||||||||||||||||||||||..|||||||||||||||||||||
+FISH08207        812 ACCCTCATCTGCCATGTCAGCGGGTTCCACCCTGCACCTGTCCGAGTCAG    861
+
+1189_DAA_A_72    381 GTGGACCAGGAACAATCAGAACCTGACAGAGGGAGTACGTCTCAGCACCC    430
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+FISH08207        862 GTGGACCAGGAACAATCAGAACCTGACAGAGGGAGTACGTCTCAGCACCC    911
+
+1189_DAA_A_72    431 CCTACCCCAACGCTGATTTCACC    453
+                     |||||||||||||||||||||||
+FISH08207        912 CCTACCCCAACGCTGATTTCACC    934
+
+
+#---------------------------------------
+#---------------------------------------
