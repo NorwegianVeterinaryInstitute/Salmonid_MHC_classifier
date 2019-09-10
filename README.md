@@ -16,7 +16,7 @@ $ conda install -c conda-forge biopython ete3
 
 ## Initiation
 ```bash
-$ python tool.py [input.fa] [Db_name] [report.txt]
+$ python salmonid_mhc_classifier.py [input.fa] [Db_name] [report.txt]
 ```  
 
 input.fa: Sequences in fasta format  
