@@ -14,6 +14,8 @@ First three packages are available within python while the last two can be insta
 $ conda install -c conda-forge biopython ete3 
 ```
 
+Current version uses already downloaded data from IPD-MHC and the folder 'data' from github has to be downloaded and placed at the same place as the python file. This will change soon when the API access for IPD-MHC becomes publically available.
+
 ## Initiation
 ```bash
 $ python salmonid_mhc_classifier.py [input.fa] [output_folder] [report.txt] [Db_name]
