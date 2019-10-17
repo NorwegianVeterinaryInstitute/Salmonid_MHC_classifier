@@ -16,14 +16,16 @@ $ conda install -c conda-forge biopython ete3
 
 ## Initiation
 ```bash
-$ python salmonid_mhc_classifier.py [input.fa] [Db_name] [report.txt]
+$ python salmonid_mhc_classifier.py [input.fa] [output_folder] [report.txt] [Db_name]
 ```  
 
 input.fa: Sequences in fasta format  
-Db_name: SASA-DAA, SASA-DAB, SASA-UAB  
+output_folder: Folder for output data
 report.txt: Name for the output report file  
+Db_name: SASA-DAA, SASA-DAB, SASA-UAB  
 
 ## Execution
+Output files are saved to the [output_folder] as specified in the 
 Each fasta record in the [input.fa] will be processed one at a time  
   Output: NAME.fa  
   
