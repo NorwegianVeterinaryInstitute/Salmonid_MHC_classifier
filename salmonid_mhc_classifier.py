@@ -55,9 +55,21 @@ def translate(name, nt_file, seq_len, aa_file):
 def muscle_aln(name, nt_file, input_file, specific_db, aln_file, tree_file, tree_png_file):
     execute('cat ' + nt_file + ' data/' + specific_db + '.nt > ' + input_file)
     execute('muscle -in ' + input_file + ' -out ' + aln_file + ' -tree2 ' + tree_file)
+#    execute('nw_display -s ' + tree_file + ' > ' + tree_svg_file)
+#    execute('cairosvg -f pdf -o ' + tree_pdf_file + ' ' + tree_svg_file)
     Tree(tree_file).render(tree_png_file, dpi=200, w=400, units='mm')
     print(name + ' (2/5 tasks): Muscle complete')
     
+
+def clade_extraction_old(name, tree_file):
+    execute('nw_clade -s ' + tree_file + ' ' + name + ' > ' + clade_out_file)
+    for line in open(clade_out_file, 'r'):
+        if 'WARNING' not in line:
+            clade_ids = line.split('|')[1]
+    print(name + ' (3/5 tasks): Clade extraction complete')
+    return(clade_ids)
+
+
 def clade_extraction(name, tree_file):
     siblings = []
     node = Tree(tree_file).search_nodes(name=name)[0]
@@ -89,61 +101,67 @@ def water_aln(name, xx_file, clade_xx_file, water_xx_out_file):
 
     return(identity, similarity)
  
-def main(input_file, report_file_name, specific_db):
+def main(input_file, output_folder, report_file_name, specific_db):
     (table, table_nt, table_aa) = collect_database_info()
     
-    report_file = open(report_file_name, 'w')
-    
-    execute('rm -r scratch output')
+    execute('rm -r scratch')
     
     execute('mkdir scratch')
-    execute('mkdir output')
+    execute('mkdir ' + output_folder)
     
+    report_file = open(output_folder + '/' + report_file_name, 'w')
+
     for record in SeqIO.parse(open(input_file, 'r'), 'fasta'):
-        name = record.id
+        
+        name = record.id.replace('-','_')
+        record.id = name
+        record.name = name
+        record.description = name
+        
+        print ('check: ' + name, end='\n')
         seq = str(record.seq)
         seq_len = len(seq) 
-        
-        nt_file = 'output/' + name + '.fa'
-        aa_file = 'output/' + name + '.aa'
-        
+            
+        nt_file = output_folder + '/' + name + '.fa'
+        aa_file = output_folder + '/' + name + '.aa'
+            
         input_file = 'scratch/' + name + '_muscle_input.nt'
-        aln_file = 'output/' + name + '_muscle_output.aln.txt'
-        tree_file = 'output/' + name + '_muscle_output.tree.txt'
-        tree_png_file = 'output/' + name + '_muscle_output.tree.png'
+        aln_file = output_folder + '/' + name + '_muscle_output.aln.txt'
+        tree_file = output_folder + '/' + name + '_muscle_output.tree.txt'
+        tree_png_file = output_folder + '/' + name + '_muscle_output.tree.png'
 #        tree_svg_file = 'scratch/' + name + '_muscle_output.tree.svg'
 #        tree_pdf_file = 'output/' + name + '_muscle_output.tree.pdf'
-                
+                    
         if check_nt_length(seq_len) is not 'ok':
             break
-           
+               
         write_nt_file(record, nt_file)
-        
+            
         if translate(name, nt_file, seq_len, aa_file) is not 'ok':
             break
         else:
             print(name + ' (1/5 tasks): Translate complete')
-        
+            
         muscle_aln(name, nt_file, input_file, specific_db, aln_file, tree_file, tree_png_file)
-        
+            
 #        clade_id = clade_extraction(name, tree_file)
         clade_ids = clade_extraction(name, tree_file)
         print (clade_ids)
         for clade_id in clade_ids:
             clade_nt_file = 'scratch/' + clade_id + '.nt'
             clade_aa_file = 'scratch/' + clade_id + '.aa'
-        
-            water_nt_out_file =  'output/' + name + '_' + clade_id + '_water_nt.txt'
-            water_aa_out_file =  'output/' + name + '_' + clade_id + '_water_aa.txt'
-        
+            
+            water_nt_out_file =  output_folder + '/' + name + '_' + clade_id + '_water_nt.txt'
+            water_aa_out_file =  output_folder + '/' + name + '_' + clade_id + '_water_aa.txt'
+            
             clade_seq_extraction(clade_id, clade_nt_file, table_nt)
             clade_seq_extraction(clade_id, clade_aa_file, table_aa)
-        
+            
             (nt_identity, nt_similarity) = water_aln(name, nt_file, clade_nt_file, water_nt_out_file)
             (aa_identity, aa_similarity) = water_aln(name, aa_file, clade_aa_file, water_aa_out_file)
-            
+                
             report_file.write('*********************************************************************************\n')
-        
+            
             report_file.write(name + '\t' + str(seq_len) + '\t'+ str(seq_len/3) + '\n')
             report_file.write(clade_id + '\n')  
             report_file.write('\t'.join(table[clade_id]) + '\n')
@@ -152,15 +170,16 @@ def main(input_file, report_file_name, specific_db):
         
         report_file.write('*********************************************************************************\n')
         report_file.write('\n')
+        report_file.write('\n')
+        report_file.write('\n')
         print()
-    
-    report_file.write('*********************************************************************************\n')
     report_file.close()
 
 if __name__ == '__main__':
     input_file = sys.argv[1]
-    specific_db = sys.argv[2]
+    output_folder = sys.argv[2]
     report_file_name = sys.argv[3]
-    main(input_file, report_file_name, specific_db)
+    specific_db = sys.argv[4]
+    main(input_file, output_folder, report_file_name, specific_db)
 
     print('All done')
