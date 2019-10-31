@@ -14,9 +14,13 @@ First three packages are available within python while the last two can be insta
 $ conda install -c conda-forge biopython ete3 
 ```
 
-Current version uses already downloaded data from IPD-MHC and the folder 'data' from github has to be downloaded and placed at the same place as the python file. This will change soon when the API access for IPD-MHC becomes publically available.
 
 ## Initiation
+```bash
+$ python mhc_fetch.py
+```
+This downloads the up-to-date sequences from the IPD-MHC fish database and creates three files in a new folder called "data"
+
 ```bash
 $ python salmonid_mhc_classifier.py [input.fa] [output_folder] [report.txt] [Db_name]
 ```  
@@ -24,7 +28,7 @@ $ python salmonid_mhc_classifier.py [input.fa] [output_folder] [report.txt] [Db_
 input.fa: Sequences in fasta format  
 output_folder: Folder for output data
 report.txt: Name for the output report file  
-Db_name: SASA-DAA, SASA-DAB, SASA-UAB  
+Db_name: Sasa-DAA, Sasa-DAB, Sasa-UAB, Onmy-DAA, Onmy-DAB, Onmy-UAB  
 
 ## Execution
 Output files are saved to the [output_folder] as specified in the 
@@ -50,4 +54,7 @@ Sequence similarity and identity information from Water are included in the repo
   Output: Detail in [report.txt]  
   
 ## Output
+The script replaces '-' with '\_' for all the identifiers since it interferes with the tree analysis part of the script.
+The output will reflect this. For example, Sasa-DAA\*0601 will become Sasa_DAA*0601. 
+
 Example output is provide in the folder output_example
