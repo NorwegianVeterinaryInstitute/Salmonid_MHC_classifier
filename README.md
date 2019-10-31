@@ -20,6 +20,7 @@ $ conda install -c conda-forge biopython ete3
 $ python mhc_fetch.py
 ```
 This downloads the up-to-date sequences from the IPD-MHC fish database and creates three files in a new folder called "data"
+This need not be executed everytime but it is good to use this to update the sequences periodically. If so, delete the folder "data" and re-run the above command.
 
 ```bash
 $ python salmonid_mhc_classifier.py [input.fa] [output_folder] [report.txt] [Db_name]
