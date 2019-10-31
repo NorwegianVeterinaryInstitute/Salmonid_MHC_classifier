@@ -6,27 +6,32 @@ def collect_database_info():
     table = {}
     for line in open('data/IPD-MHC.txt', 'r'):
         if 'ACCESSION' not in line:
-            accession, name, species, previous_name = line.rstrip().split('\t')
-            if len(name) == 11:
-                proposed_name = name
-            elif len(name) == 13:
-                proposed_name = str(name)[0:11] + ':' + str(name)[11:13]
-            elif len(name) == 15:
-                proposed_name = name[0:11] + ':' + name[11:13] + ':' + name[13:15]
-            table[accession] = [accession, name, species, previous_name, proposed_name]
+            accession, name, species = line.rstrip().split('\t')
+            name = name.replace('-','_')
+            table[accession] = [accession, name, species]
 
     table_nt = {}
     for record in SeqIO.parse(open('data/IPD-MHC.nt', 'r'), 'fasta'):
-        table_nt[record.id.split('|')[1]] = [record.id, record.name, record.description, str(record.seq)]
+        record.id = record.id.replace('-','_')
+        table_nt[record.id.split('|')[1]] = [record.id, str(record.seq)]
 
     table_aa = {}
     for record in SeqIO.parse(open('data/IPD-MHC.aa', 'r'), 'fasta'):
-        table_aa[record.id.split('|')[1]] = [record.id, record.name, record.description, str(record.seq)]
-        
+        record.id = record.id.replace('-','_')
+        table_aa[record.id.split('|')[1]] = [record.id, str(record.seq)]
+      
     print('Database information collected')
     print()
     return(table, table_nt, table_aa)
-    
+
+def write_specific_db(specific_db, table_xx, output_folder, extension):
+    out_file = open(output_folder + '/' + specific_db + extension, 'a')
+    for item in table_xx:
+        if specific_db in table_xx[item][0]:
+            out_file.write('>' + table_xx[item][0]+ '\n')
+            out_file.write(table_xx[item][1]+ '\n')
+    out_file.close()
+
 def execute(command):
     p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
@@ -39,7 +44,8 @@ def check_nt_length(seq_len):
         return('ok')
     
 def write_nt_file(record, nt_file):
-    out_file = open(nt_file, 'w')
+    out_file = open(nt_file, 'a')
+    print (record.id)
     SeqIO.write(record, out_file, 'fasta')
     out_file.close()
 
@@ -52,11 +58,9 @@ def translate(name, nt_file, seq_len, aa_file):
         else:
             return('ok')
         
-def muscle_aln(name, nt_file, input_file, specific_db, aln_file, tree_file, tree_png_file):
-    execute('cat ' + nt_file + ' data/' + specific_db + '.nt > ' + input_file)
+def muscle_aln(name, nt_file, input_file, output_folder, specific_db, aln_file, tree_file, tree_png_file):
+    execute('cat ' + nt_file +  ' ' + output_folder + '/' + specific_db + '.nt > ' + input_file)
     execute('muscle -in ' + input_file + ' -out ' + aln_file + ' -tree2 ' + tree_file)
-#    execute('nw_display -s ' + tree_file + ' > ' + tree_svg_file)
-#    execute('cairosvg -f pdf -o ' + tree_pdf_file + ' ' + tree_svg_file)
     Tree(tree_file).render(tree_png_file, dpi=200, w=400, units='mm')
     print(name + ' (2/5 tasks): Muscle complete')
     
@@ -85,7 +89,7 @@ def clade_extraction(name, tree_file):
 def clade_seq_extraction(clade_id, clade_xx_file, table_xx):
     out_file = open(clade_xx_file , 'w')
     out_file.write('>' + clade_id + '\n')
-    out_file.write(table_xx[clade_id][3] + '\n')
+    out_file.write(table_xx[clade_id][1] + '\n')
     out_file.close()
 
 def water_aln(name, xx_file, clade_xx_file, water_xx_out_file):
@@ -102,15 +106,17 @@ def water_aln(name, xx_file, clade_xx_file, water_xx_out_file):
     return(identity, similarity)
  
 def main(input_file, output_folder, report_file_name, specific_db):
-    (table, table_nt, table_aa) = collect_database_info()
-    
     execute('rm -r scratch')
-    
     execute('mkdir scratch')
     execute('mkdir ' + output_folder)
     
     report_file = open(output_folder + '/' + report_file_name, 'w')
 
+    (table, table_nt, table_aa) = collect_database_info()
+    specific_db = specific_db.replace('-','_')
+    write_specific_db(specific_db, table_nt, output_folder, '.nt')
+    write_specific_db(specific_db, table_aa, output_folder, '.aa')
+    
     for record in SeqIO.parse(open(input_file, 'r'), 'fasta'):
         
         name = record.id.replace('-','_')
@@ -122,15 +128,13 @@ def main(input_file, output_folder, report_file_name, specific_db):
         seq = str(record.seq)
         seq_len = len(seq) 
             
-        nt_file = output_folder + '/' + name + '.fa'
+        nt_file = output_folder + '/' + name + '.nt'
         aa_file = output_folder + '/' + name + '.aa'
             
         input_file = 'scratch/' + name + '_muscle_input.nt'
         aln_file = output_folder + '/' + name + '_muscle_output.aln.txt'
         tree_file = output_folder + '/' + name + '_muscle_output.tree.txt'
         tree_png_file = output_folder + '/' + name + '_muscle_output.tree.png'
-#        tree_svg_file = 'scratch/' + name + '_muscle_output.tree.svg'
-#        tree_pdf_file = 'output/' + name + '_muscle_output.tree.pdf'
                     
         if check_nt_length(seq_len) is not 'ok':
             break
@@ -142,9 +146,8 @@ def main(input_file, output_folder, report_file_name, specific_db):
         else:
             print(name + ' (1/5 tasks): Translate complete')
             
-        muscle_aln(name, nt_file, input_file, specific_db, aln_file, tree_file, tree_png_file)
+        muscle_aln(name, nt_file, input_file, output_folder, specific_db, aln_file, tree_file, tree_png_file)
             
-#        clade_id = clade_extraction(name, tree_file)
         clade_ids = clade_extraction(name, tree_file)
         print (clade_ids)
         for clade_id in clade_ids:
