@@ -186,3 +186,9 @@ if __name__ == '__main__':
     main(input_file, output_folder, report_file_name, specific_db)
 
     print('All done')
+    print()
+    print('*********************************************************************************')
+    print("The script replaces '-' with '_' for all the identifiers since it interferes with the tree analysis part of the script.")
+    print("The output will reflect this.")
+    print("For example, Sasa-DAA*0601 will become Sasa_DAA*0601.")
+    print('*********************************************************************************')
