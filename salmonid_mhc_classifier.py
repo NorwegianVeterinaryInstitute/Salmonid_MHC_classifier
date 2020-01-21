@@ -37,7 +37,7 @@ def execute(command):
     (output, err) = p.communicate()
     p_status = p.wait()
 
-def check_nt_length(seq_len):
+def check_nt_length(name, seq_len):
     if seq_len % 3 != 0:
         print (name + ' length is not divisble by 3. Check!!')
     else:
@@ -136,7 +136,7 @@ def main(input_file, output_folder, report_file_name, specific_db):
         tree_file = output_folder + '/' + name + '_muscle_output.tree.txt'
         tree_png_file = output_folder + '/' + name + '_muscle_output.tree.png'
                     
-        if check_nt_length(seq_len) is not 'ok':
+        if check_nt_length(name, seq_len) is not 'ok':
             break
                
         write_nt_file(record, nt_file)
