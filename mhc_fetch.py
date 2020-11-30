@@ -86,7 +86,7 @@ if __name__ == "__main__":
                 sequence = fetchSequence(value['accession'], 'full')
 
                 # Append to file
-                file.write('>MHC|{}|{}\n'.format(value['accession'], value['name'].replace('-','_')))
+                file.write('>MHC|{}|{}\n'.format(value['accession'], value['name'].replace('-','_').replace(‘:’,’_’)))
                 file.write('{}\n'.format(sequence))
             
 
@@ -96,7 +96,7 @@ if __name__ == "__main__":
                 sequence = fetchSequence(value['accession'], 'protein')
 
                 # Append to file
-                file.write('>MHC|{}|{}\n'.format(value['accession'], value['name'].replace('-','_')))
+                file.write('>MHC|{}|{}\n'.format(value['accession'], value['name'].replace('-','_').replace(‘:’,’_’)))
                 file.write('{}\n'.format(sequence))
 
             # Increase offset number
