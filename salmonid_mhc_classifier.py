@@ -136,12 +136,12 @@ def main(input_file, output_folder, report_file_name, specific_db):
         tree_file = output_folder + '/' + name + '_muscle_output.tree.txt'
         tree_png_file = output_folder + '/' + name + '_muscle_output.tree.png'
                     
-        if check_nt_length(name, seq_len) is not 'ok':
+        if check_nt_length(name, seq_len) != 'ok':
             break
                
         write_nt_file(record, nt_file)
             
-        if translate(name, nt_file, seq_len, aa_file) is not 'ok':
+        if translate(name, nt_file, seq_len, aa_file) != 'ok':
             break
         else:
             print(name + ' (1/5 tasks): Translate complete')
