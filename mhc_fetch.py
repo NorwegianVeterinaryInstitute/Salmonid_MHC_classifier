@@ -83,10 +83,10 @@ if __name__ == "__main__":
             # Fetch nucleotide sequence
             with open(os.path.join(cmd.output, "IPD-MHC.nt"), 'w' if offset == 0 else 'a') as file:
 
-                sequence = fetchSequence(value['accession'], 'full')
+                sequence = fetchSequence(value['accession'], 'CDS')
 
                 # Append to file
-                file.write('>MHC|{}|{}\n'.format(value['accession'], value['name'].replace('-','_').replace(‘:’,’_’)))
+                file.write('>MHC|{}|{}\n'.format(value['accession'], value['name'].replace('-','_').replace(':','_')))
                 file.write('{}\n'.format(sequence))
             
 
@@ -96,7 +96,7 @@ if __name__ == "__main__":
                 sequence = fetchSequence(value['accession'], 'protein')
 
                 # Append to file
-                file.write('>MHC|{}|{}\n'.format(value['accession'], value['name'].replace('-','_').replace(‘:’,’_’)))
+                file.write('>MHC|{}|{}\n'.format(value['accession'], value['name'].replace('-','_').replace(':','_')))
                 file.write('{}\n'.format(sequence))
 
             # Increase offset number
