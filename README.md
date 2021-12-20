@@ -59,3 +59,9 @@ The script replaces '-' with '\_' for all the identifiers since it interferes wi
 The output will reflect this. For example, Sasa-DAA\*0601 will become Sasa_DAA*0601. 
 
 Example output is provide in the folder output_example
+
+## Tool versions
+The pipeline has been tested with the following versions:
+Muscle v3.8.1551
+transeq, water: EMBOSS v6.6.0.0
+ete3 v3.1.1
