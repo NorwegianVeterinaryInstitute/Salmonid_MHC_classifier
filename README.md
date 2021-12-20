@@ -61,7 +61,7 @@ The output will reflect this. For example, Sasa-DAA\*0601 will become Sasa_DAA*0
 Example output is provide in the folder output_example
 
 ## Tool versions
-The pipeline has been tested with the following versions:
-Muscle v3.8.1551
-transeq, water: EMBOSS v6.6.0.0
-ete3 v3.1.1
+The pipeline has been tested with the following versions:  
+Muscle v3.8.1551  
+transeq, water: EMBOSS v6.6.0.0  
+ete3 v3.1.1  
